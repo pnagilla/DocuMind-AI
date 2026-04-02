@@ -1,0 +1,25 @@
+# Web framework
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+
+# Settings management
+pydantic-settings==2.2.1
+
+# PDF parsing
+pypdf==4.2.0
+
+# Text chunking
+langchain-text-splitters==0.2.0
+
+# Embeddings
+sentence-transformers==3.0.0
+
+# Vector store
+faiss-cpu==1.8.0
+
+# LLM
+openai==1.30.0
+
+# Utilities
+python-multipart==0.0.9
+aiofiles==23.2.1
