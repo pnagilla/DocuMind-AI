@@ -2,16 +2,21 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, status
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status
 
 from app.core.config import settings
 from app.models.document import DocumentUploadResponse
+from app.routes.auth import get_current_user
+from app.services.document_service import document_service
 
 router = APIRouter()
 
 
 @router.post("/upload", response_model=DocumentUploadResponse, status_code=status.HTTP_202_ACCEPTED)
-async def upload_document(file: UploadFile = File(...)):
+async def upload_document(
+    file: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user),
+):
     """Upload a PDF document for processing."""
     suffix = Path(file.filename).suffix.lower()
     if suffix not in settings.ALLOWED_EXTENSIONS:
@@ -33,26 +38,36 @@ async def upload_document(file: UploadFile = File(...)):
 
     upload_path.write_bytes(content)
 
-    # TODO: trigger document_service.process_document(str(upload_path), document_id)
+    await document_service.process_document(
+        str(upload_path), document_id, file.filename, current_user["user_id"]
+    )
 
     return DocumentUploadResponse(
         document_id=document_id,
         filename=file.filename,
-        status="queued",
-        message="Document uploaded. Processing will begin shortly.",
+        status="processed",
+        message="Document uploaded and indexed successfully.",
         uploaded_at=datetime.now(timezone.utc),
     )
 
 
 @router.get("/", summary="List all documents")
-async def list_documents():
-    """Return a list of all indexed documents."""
-    # TODO: return document_service.list_documents()
-    return {"documents": []}
+async def list_documents(current_user: dict = Depends(get_current_user)):
+    """Return a list of all indexed documents for the current user."""
+    docs = await document_service.list_documents(current_user["user_id"])
+    return {"documents": docs}
 
 
 @router.delete("/{document_id}", summary="Delete a document")
-async def delete_document(document_id: str):
+async def delete_document(
+    document_id: str,
+    current_user: dict = Depends(get_current_user),
+):
     """Remove a document from the index."""
-    # TODO: document_service.delete_document(document_id)
+    deleted = await document_service.delete_document(document_id, current_user["user_id"])
+    if not deleted:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Document not found.",
+        )
     return {"deleted": document_id}

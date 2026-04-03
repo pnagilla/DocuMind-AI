@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — DocuMind AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo-row">
+        <img src="/static/logo.svg" alt="DocuMind AI" class="auth-logo-img"/>
+        <h1 class="auth-logo">DocuMind AI</h1>
+      </div>
+      <p class="auth-subtitle">Sign in to your account</p>
+
+      <div id="authError" class="auth-error hidden"></div>
+
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter your username" autocomplete="username" required/>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required/>
+        </div>
+        <button type="submit" class="auth-btn" id="submitBtn">Sign In</button>
+      </form>
+
+      <p class="auth-switch">
+        Don't have an account? <a href="/register">Create one</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Redirect if already logged in
+    if (localStorage.getItem('token')) window.location.href = '/';
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const errorDiv = document.getElementById('authError');
+      btn.disabled = true;
+      btn.textContent = 'Signing in...';
+      errorDiv.classList.add('hidden');
+
+      try {
+        const res = await fetch('/api/v1/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: document.getElementById('username').value.trim(),
+            password: document.getElementById('password').value,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          errorDiv.textContent = data.detail || 'Login failed.';
+          errorDiv.classList.remove('hidden');
+        } else {
+          localStorage.setItem('token', data.access_token);
+          localStorage.setItem('username', data.username);
+          window.location.href = '/';
+        }
+      } catch {
+        errorDiv.textContent = 'Could not reach the server.';
+        errorDiv.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+      }
+    });
+  </script>
+</body>
+</html>

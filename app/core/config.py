@@ -19,9 +19,13 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
 
     # LLM
-    OPENAI_API_KEY: str = ""
-    LLM_MODEL: str = "gpt-3.5-turbo"
+    GROQ_API_KEY: str = ""
+    LLM_MODEL: str = "llama-3.3-70b-versatile"
     MAX_RETRIEVED_CHUNKS: int = 5
+
+    # Auth
+    SECRET_KEY: str = "change-this-to-a-random-secret-in-production"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440  # 24 hours
 
     class Config:
         env_file = ".env"

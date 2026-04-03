@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -14,5 +15,5 @@ class DocumentChunk(BaseModel):
     chunk_id: str
     document_id: str
     content: str
-    page_number: int | None = None
+    page_number: Optional[int] = None
     metadata: dict = {}

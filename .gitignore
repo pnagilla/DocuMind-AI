@@ -1,0 +1,22 @@
+# Environment
+.env
+
+# Virtual environment
+venv/
+
+# Uploaded files
+uploads/
+
+# FAISS index & database
+faiss_index/
+documind.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# macOS
+.DS_Store

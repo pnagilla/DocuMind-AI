@@ -23,3 +23,7 @@ openai==1.30.0
 # Utilities
 python-multipart==0.0.9
 aiofiles==23.2.1
+
+# Auth
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
