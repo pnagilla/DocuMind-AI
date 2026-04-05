@@ -9,39 +9,111 @@
 </head>
 <body>
   <div class="auth-page">
-    <div class="auth-card">
-      <div class="auth-logo-row">
-        <img src="/static/logo.svg" alt="DocuMind AI" class="auth-logo-img"/>
-        <h1 class="auth-logo">DocuMind AI</h1>
+
+    <!-- Left panel: brand + headline + feature cards + stats -->
+    <div class="auth-left">
+      <div class="auth-brand">
+        <img src="/static/logo.svg" alt="DocuMind AI" class="auth-brand-img"/>
+        <div class="auth-brand-text">
+          <h1 class="auth-brand-name">DocuMind AI</h1>
+          <p class="auth-brand-tagline">Your intelligent document assistant</p>
+        </div>
       </div>
-      <p class="auth-subtitle">Create your account</p>
 
-      <div id="authError" class="auth-error hidden"></div>
+      <div class="auth-headline">
+        <h2>Turn your documents into<br/>instant knowledge</h2>
+        <p>Upload any PDF, ask questions in plain English, and get accurate answers with cited sources — powered by AI that actually understands your content.</p>
+      </div>
 
-      <form id="registerForm" class="auth-form">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" placeholder="Choose a username" autocomplete="username" required/>
+      <div class="auth-features">
+        <div class="auth-feature-card">
+          <div class="auth-feature-icon">📄</div>
+          <div class="auth-feature-title">Upload PDFs</div>
+          <div class="auth-feature-desc">Drag & drop your documents and get them indexed instantly</div>
         </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="Enter your email" autocomplete="email" required/>
+        <div class="auth-feature-card">
+          <div class="auth-feature-icon">💬</div>
+          <div class="auth-feature-title">Chat with Docs</div>
+          <div class="auth-feature-desc">Ask questions in plain language and get precise answers</div>
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Min. 6 characters" autocomplete="new-password" required/>
+        <div class="auth-feature-card">
+          <div class="auth-feature-icon">🔍</div>
+          <div class="auth-feature-title">Smart Search</div>
+          <div class="auth-feature-desc">AI-powered semantic search across all your documents</div>
         </div>
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" placeholder="Re-enter your password" autocomplete="new-password" required/>
+        <div class="auth-feature-card">
+          <div class="auth-feature-icon">🔒</div>
+          <div class="auth-feature-title">Private & Secure</div>
+          <div class="auth-feature-desc">Your documents stay private — isolated per account</div>
         </div>
-        <button type="submit" class="auth-btn" id="submitBtn">Create Account</button>
-      </form>
+        <div class="auth-feature-card">
+          <div class="auth-feature-icon">📌</div>
+          <div class="auth-feature-title">Source Citations</div>
+          <div class="auth-feature-desc">Every answer links back to the exact file and page number</div>
+        </div>
+        <div class="auth-feature-card">
+          <div class="auth-feature-icon">⚡</div>
+          <div class="auth-feature-title">Lightning Fast</div>
+          <div class="auth-feature-desc">Vector search retrieves the most relevant chunks in milliseconds</div>
+        </div>
+      </div>
 
-      <p class="auth-switch">
-        Already have an account? <a href="/login">Sign in</a>
-      </p>
+      <div class="auth-stats">
+        <div class="auth-stat">
+          <span class="auth-stat-value">∞</span>
+          <span class="auth-stat-label">Documents</span>
+        </div>
+        <div class="auth-stat-divider"></div>
+        <div class="auth-stat">
+          <span class="auth-stat-value">RAG</span>
+          <span class="auth-stat-label">Powered</span>
+        </div>
+        <div class="auth-stat-divider"></div>
+        <div class="auth-stat">
+          <span class="auth-stat-value">24/7</span>
+          <span class="auth-stat-label">Available</span>
+        </div>
+        <div class="auth-stat-divider"></div>
+        <div class="auth-stat">
+          <span class="auth-stat-value">LLM</span>
+          <span class="auth-stat-label">AI Answers</span>
+        </div>
+      </div>
     </div>
+
+    <!-- Right panel: register form -->
+    <div class="auth-right">
+      <div class="auth-card">
+        <p class="auth-subtitle">Create your account</p>
+
+        <div id="authError" class="auth-error hidden"></div>
+
+        <form id="registerForm" class="auth-form">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Choose a username" autocomplete="username" required/>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" autocomplete="email" required/>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Min. 6 characters" autocomplete="new-password" required/>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="Re-enter your password" autocomplete="new-password" required/>
+          </div>
+          <button type="submit" class="auth-btn" id="submitBtn">Create Account</button>
+        </form>
+
+        <p class="auth-switch">
+          Already have an account? <a href="/login">Sign in</a>
+        </p>
+      </div>
+    </div>
+
   </div>
 
   <script>
